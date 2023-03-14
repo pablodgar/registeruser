@@ -19,7 +19,8 @@ public class MiUserDetailsService implements UserDetailsService {
 	    private UserRepository userRepository;
 	   
 
-	    /**
+	    /**Esta clase se usaba si se quiere generar el TOKEN luego de registrarse, segun lo pedido No se utiliza
+	     * porque el TOKEN se esta generando en el registro del usuario. 
 	     * Cargo los datos obtenidos de la consulta a la BD</b>.
 	     * @param username nombre del usuario a buscar
 	     * @return UserDetails que poblara por medio de <b>Usuario</b>

@@ -3,6 +3,7 @@ package com.company.registeruser.controllers;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +23,14 @@ import com.company.registeruser.security.JwtUtil;
 import com.company.registeruser.security.MiUserDetails;
 import com.company.registeruser.services.RegisterService;
 
+import org.slf4j.Logger;
+
+
 
 @RestController
 public class RegisterController {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -42,9 +48,10 @@ public class RegisterController {
 	
 	@PostMapping("/registrarse")
 	  public ResponseEntity<?> registerUser(@RequestBody UserInDTO userIn) {
-				
+		logger.info("Entra al Endpoint /registrarse");
+		
 		Pattern patternEmail = Pattern.compile("[a-z]{7}@?dominio\\.cl");		
-		Pattern patternPassword = Pattern.compile("[A-Z]{1}[a-z]+[0-9][0-9]");		
+		Pattern patternPassword = Pattern.compile("^[A-Z]{1}[a-z]+[0-9]{2}$");
 		Matcher matherEmail = patternEmail.matcher(userIn.getEmail());
 		Matcher matherPassword = patternPassword.matcher(userIn.getPassword());
 		
@@ -54,11 +61,11 @@ public class RegisterController {
 		if(!matherPassword.find()) {
 			return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: El Formato de la Password No es Correcto!"));
 		}		
-		if (userRepository.existsByName(userIn.getName())) {
-		      return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: El nombre del Usuario ya Existe!"));
-		}
+//		if (userRepository.existsByName(userIn.getName())) {
+//		      return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: El nombre del Usuario ya Existe!"));
+//		}
 		if (userRepository.existsByEmail(userIn.getEmail())) {
-		      return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: El Email del Usuario ya Existe!"));
+		      return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: Email del Usuario ya Registrado!"));
 		    }		
 		User user = new User();
 		user.setName(userIn.getName());
@@ -79,6 +86,7 @@ public class RegisterController {
 	  */
     @PostMapping("/iniciar")
     public ResponseEntity<?> iniciarSesion(@RequestBody AutenticacionLogin userIn) throws Exception{
+    	logger.info("Entra al Endpoint /iniciar");
         try {
             authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userIn.getUsername(), userIn.getPassword())
@@ -94,6 +102,7 @@ public class RegisterController {
 	
     @DeleteMapping("/deleteUser")
     public void  deleteUser(@RequestBody AutenticacionLogin usuario){
+    	logger.info("Entra al Endpoint /deleteUser");
     	registerService.deleteUsuario(usuario);
     }
 

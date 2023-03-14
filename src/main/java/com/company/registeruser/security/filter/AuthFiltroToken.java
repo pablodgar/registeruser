@@ -33,7 +33,6 @@ public class AuthFiltroToken extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         // Extraemos el header Authorization: es donde se encuentra el token enviado por el usuario
-        // Podemos poner esta parte en la clase de utilidad del token
         final String headerAuth = request.getHeader("Authorization");
 
         String token = null;
@@ -64,11 +63,11 @@ public class AuthFiltroToken extends OncePerRequestFilter {
 
                 // y establecemos el tipo de seguridad
                 SecurityContextHolder.getContext().setAuthentication(userPassAuthToken);
-            } // fin de la validacion del token con los datos de la BD
+            }
         }
 
         filterChain.doFilter(request, response);
-    } // fin del metodo de filtradp
+    } 
 
 
 }
