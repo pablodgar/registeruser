@@ -47,7 +47,7 @@ public class RegisterService implements UserDetailsService {
 	}
 	 
 	
-	public UserOutDTO saveUsuario(UserInDTO userInDTO){
+	public UserOutDTO saveUsuario(UserInDTO userInDTO, String token){
 			   User user = new User();
 			    user.setName(userInDTO.getName());
 			    user.setEmail(userInDTO.getEmail());
@@ -55,7 +55,7 @@ public class RegisterService implements UserDetailsService {
 			    user.setCreated(new Date());
 			    user.setModified(new Date());
 			    user.setLast_login(new Date());				    		    
-			    user.setToken(null);
+			    user.setToken(token);
 			    user.setIsactive(true);
 			        
 		        List<Phone> phonesAux = new ArrayList<Phone>();

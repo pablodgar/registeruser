@@ -17,6 +17,7 @@ public class MiUserDetailsService implements UserDetailsService {
 	
 	   @Autowired
 	    private UserRepository userRepository;
+	   
 
 	    /**
 	     * Cargo los datos obtenidos de la consulta a la BD</b>.
@@ -33,5 +34,4 @@ public class MiUserDetailsService implements UserDetailsService {
 	        return usuario.map(MiUserDetails::new).get();
 
 	    }
-
 }
