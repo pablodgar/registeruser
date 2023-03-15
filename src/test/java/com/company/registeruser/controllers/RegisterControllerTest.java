@@ -9,12 +9,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+
 import com.company.registeruser.dto.UserInDTO;
 import com.company.registeruser.dto.UserOutDTO;
 import com.company.registeruser.repositories.UserRepository;
 import com.company.registeruser.security.JwtUtil;
 import com.company.registeruser.security.MiUserDetails;
 import com.company.registeruser.services.RegisterService;
+
 import junit.framework.Assert;
 
 
